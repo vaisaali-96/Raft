@@ -48,16 +48,13 @@ func TestReElection(t *testing.T) {
 	fmt.Println("Test: election after network failure...")
 
 	leader1 := cfg.checkOneLeader()
-
 	// if the leader disconnects, a new one should be elected.
 	cfg.disconnect(leader1)
 	cfg.checkOneLeader()
-
 	// if the old leader rejoins, that shouldn't
 	// disturb the old leader.
 	cfg.connect(leader1)
 	leader2 := cfg.checkOneLeader()
-
 	// if there's no quorum, no leader should
 	// be elected.
 	cfg.disconnect(leader2)
@@ -68,11 +65,9 @@ func TestReElection(t *testing.T) {
 	// if a quorum arises, it should elect a leader.
 	cfg.connect((leader2 + 1) % servers)
 	cfg.checkOneLeader()
-
 	// re-join of last node shouldn't prevent leader from existing.
 	cfg.connect(leader2)
 	cfg.checkOneLeader()
-
 	fmt.Println("... Passed")
 }
 
@@ -625,7 +620,6 @@ func TestPersist3(t *testing.T) {
 	fmt.Println("... Passed")
 }
 
-//
 // Test the scenarios described in Figure 8 of the extended Raft paper. Each
 // iteration asks a leader, if there is one, to insert a command in the Raft
 // log.  If there is a leader, that leader will fail quickly with a high
@@ -634,7 +628,6 @@ func TestPersist3(t *testing.T) {
 // alive servers isn't enough to form a majority, perhaps start a new server.
 // The leader in a new term may try to finish replicating log entries that
 // haven't been committed yet.
-//
 func TestFigure8(t *testing.T) {
 	servers := 5
 	cfg := make_config(t, servers, false)
